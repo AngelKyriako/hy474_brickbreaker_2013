@@ -2,6 +2,10 @@
 	import flash.display.*;
 	import flash.events.*;
 	import utils.*;
+	import flash.events.Event;
+  import flash.events.KeyboardEvent;
+  import flash.ui.Keyboard;
+
 	public class BrickBreacker extends Sprite{
 		private var Paddle:MovieClip;
 		private var Ball:MovieClip;
@@ -16,6 +20,7 @@
 		private var __detection:Boolean=false;
 		private var Less:MovieClip;
 		private var Scoreboard:MovieClip;
+		private var keys:Array = [];
 		/*Constructor*/
 		public function BrickBreacker() {
 			init();
@@ -131,14 +136,15 @@
 		private function dispatchevents():void {
 			//all Events
 			if (newGame) {
-				stage.addEventListener(MouseEvent.MOUSE_MOVE,movePaddle);
+				//na valoume na epilegei mouse h' arrows
+				//stage.addEventListener(MouseEvent.MOUSE_MOVE,movePaddleWithMouse); /*Event Listener for mouse*/
+				stage.addEventListener(KeyboardEvent.KEY_DOWN, movePaddleWithArrowKeys); /*Event Listener for arrow keys*/
 				//stage.addEventListener(Event.ENTER_FRAME,moveBall);
 			}
 		}
 		
-		/*Move paddle function*/
-		private function movePaddle(e:MouseEvent) {
-
+		/*Move paddle function with mouse*/
+		private function movePaddleWithMouse(e:MouseEvent) {
 			/*The paddle follows the mouse*/
 			Paddle.x = mouseX - Paddle.width / 2;
 			/*If the mouse goes off too far to the left*/
@@ -151,9 +157,37 @@
 				/*Keep the paddle on stage*/
 				Paddle.x = stage.stageWidth - Paddle.width;
 			}
+			
 			e.updateAfterEvent();
 		}
-		
+		/*move paddle function with keys*/
+		function movePaddleWithArrowKeys(e:KeyboardEvent):void
+		{
+			var key:uint = e.keyCode;
+			var step:uint = 10;
+			switch (key){
+				case Keyboard.LEFT:
+					if (Paddle.x < Paddle.width / 2) {
+						/*Keep the paddle on stage*/
+						Paddle.x = 0;
+					}
+					else{
+						Paddle.x -= step;
+					}
+				break;
+			  case Keyboard.RIGHT:
+				  if (Paddle.x > (stage.stageWidth - Paddle.width)) {
+					/*Keep the paddle on stage*/
+					Paddle.x = stage.stageWidth - Paddle.width;
+				  }
+				  else{
+					Paddle.x += step;
+				  }
+			 break;
+			}
+		}
+		 
+
 		private function setPosition(__object:MovieClip,__x:Number,__y:Number) {
 			addChild(__object);
 			__object.x=__x;
