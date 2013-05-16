@@ -1,0 +1,32 @@
+Flash Player 11.2 
+ActionScript 3.0
+
+Stin arxiki othoni pou paragetai molis kaneis new project ekana deksi klik->
+Documents Settings kai ekana to megethos 1000 px x 650 px, mauro fonto kai frame
+rate 60
+
+Afou dimiourgisa ena package game kai mia klasi BrickBreaker.
+Deksia sto properties tou .fla arxeiou, evala sto class tin klasi 
+game.BrickBreaker. Einai i klasi pou kaleite otan treksoume to paixnidi (ctrl + enter)
+
+Sti sunexeia prepei na pareis copy paste apo to allo project ena symbol 
+kai na to valeis se kapoio layer. 
+
+Opou uparxei kati = new kati() einai ta plaina sprites, ta kalei gia na 
+ta valei panw sto stage.
+
+To kathe symbol apoteleitai apo 1 , 2 h' parapanw symbols , px gia to paddle einai to paddle kai to paddlegf
+gia to startgame einai to start kai to symbol 1 copy121, sta deksia tou fainetai i 
+klasi stin opoia mpainoun.
+
+
+
+Pws apo tis eikones ftiaxnoume ta sprites : 
+http://flashtutor.org/index.php/animating/how-to-animate-sprite-in-flash-8/
+
+Ta sprites mporoume apla na ta paroume copy paste alla ta symbols einai para polla
+kai den mporoume na ta paroume copy paste giati exoun path apo to opoio ta pirame...
+Mporoume :
+1. na ta apothikeusoume :P
+2. pros to paron na min ta valoume , apla den petagontai ta kommatakia gyrw apo
+ta bricks..
