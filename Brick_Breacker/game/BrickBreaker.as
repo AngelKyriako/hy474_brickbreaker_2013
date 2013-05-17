@@ -40,8 +40,7 @@
 		private function dispatchevents():void {
 			//all Events
 			if (newGame) {
-				//na valoume na epilegei mouse h' arrows
-				//stage.addEventListener(MouseEvent.MOUSE_MOVE,movePaddleWithMouse); /*Event Listener for mouse*/
+				stage.addEventListener(MouseEvent.MOUSE_MOVE,movePaddleWithMouse); /*Event Listener for mouse*/
 				stage.addEventListener(KeyboardEvent.KEY_DOWN, movePaddleWithArrowKeys); /*Event Listener for arrow keys*/
 				stage.addEventListener(Event.ENTER_FRAME,moveBall);
 			}
