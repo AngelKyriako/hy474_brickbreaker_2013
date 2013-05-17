@@ -8,8 +8,8 @@
 	public class BrickBreaker extends Sprite{
 		private var Paddle:MovieClip;
 		private var Ball:MovieClip;
-		private var speedX:Number=5;
-		private var speedY:Number=5;
+		private var speedX:Number=8;
+		private var speedY:Number=8;
 		private var direction:Number=-1;
 		private var _base:Sprite;
 		private var _clip;
@@ -159,7 +159,7 @@
 		{
 			var key:uint = e.keyCode;
 			var prevKey:uint = e.keyCode;
-			var step:uint = 10;
+			var step:uint = 18;
 			switch (key){
 				case Keyboard.LEFT:
 					if (Paddle.x < Paddle.width / 2) {
