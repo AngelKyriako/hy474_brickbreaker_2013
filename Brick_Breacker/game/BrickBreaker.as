@@ -2,8 +2,6 @@
 	import flash.display.*;
 	import flash.events.*;
 	import utils.*;
-	import flash.events.Event;
-  	import flash.events.KeyboardEvent;
   	import flash.ui.Keyboard;
 
 	public class BrickBreaker extends Sprite{
@@ -21,42 +19,41 @@
 		private var Less:MovieClip;
 		private var Scoreboard:MovieClip;
 		private var keys:Array = [];
-		/*Constructor*/
+		
+		
 		public function BrickBreaker() {
 			init();
 		}
-		/*Call all methods to init tha stage*/
+		
 		private function init() {
-			stage.frameRate = 100; //mporei na min xreiazetai afou to exw valei stis ruthmiseis..
+			stage.frameRate = 100;
 			attachpaddle();
-			attachBricks();
+			attachball();
 			attachstart();
-		}
-		/*Attach start symbol, add an Event Listener on it
-		and call the gameBegin function*/
-		private function attachstart():void {
-			Start=new start();
-			Start.buttonMode=true;
-			setPosition(Start,500,324);
-			Start.addEventListener(MouseEvent.CLICK,gameBegin);
-		}
-		/*Attach paddle on the stage*/
-		private function attachpaddle():void {
-			//attach paddle on stage
-			Paddle=new paddle();
-			setPosition(Paddle,80,625);
+			attachBricks();
 		}
 		
-		/*random generation of bricks array*/
-		private function randRange(min:Number,max:Number):Number {
-			var randomNum:Number=Math.floor(Math.random() * max - min + 1) + min;
-			return randomNum;
+		private function gameBegin(e:MouseEvent) {
+			removeChild(MovieClip(e.currentTarget));
+			newGame=true;
+			dispatchevents();
 		}
-		/*Just return if no change*/
-		private function noChange():void {
-			return;
+		
+		/* all events are declared here */
+		private function dispatchevents():void {
+			//all Events
+			if (newGame) {
+				//na valoume na epilegei mouse h' arrows
+				//stage.addEventListener(MouseEvent.MOUSE_MOVE,movePaddleWithMouse); /*Event Listener for mouse*/
+				stage.addEventListener(KeyboardEvent.KEY_DOWN, movePaddleWithArrowKeys); /*Event Listener for arrow keys*/
+				stage.addEventListener(Event.ENTER_FRAME,moveBall);
+			}
 		}
-		/*Attach bricks on the stage*/
+		
+		/*
+			BRICKS
+		*/
+		
 		public function attachBricks():void {
 			var _xdistance:Number=0;
 			var _ydistance:Number=0;
@@ -67,7 +64,7 @@
 			_base.y=0;
 			addChild(_base);
 
-			//adding different bricks on to the stage
+		//adding different bricks on to the stage
 			for (var i:int=0; i<50; i++) {
 				var brick:MovieClip;
 				bricksArray.push(brick);
@@ -124,24 +121,25 @@
 			}
 		}
 		
-		/*Create new Game, add an Event Listener to stage
-		and call movePaddle function*/
-		private function gameBegin(e:MouseEvent) {
-			removeChild(MovieClip(e.currentTarget));
-			newGame=true;
-			dispatchevents();
+		/*random generation of bricks array*/
+		private function randRange(min:Number,max:Number):Number {
+			var randomNum:Number=Math.floor(Math.random() * max - min + 1) + min;
+			return randomNum;
 		}
-		//all events declare here
-		private function dispatchevents():void {
-			//all Events
-			if (newGame) {
-				//na valoume na epilegei mouse h' arrows
-				//stage.addEventListener(MouseEvent.MOUSE_MOVE,movePaddleWithMouse); /*Event Listener for mouse*/
-				stage.addEventListener(KeyboardEvent.KEY_DOWN, movePaddleWithArrowKeys); /*Event Listener for arrow keys*/
-				//stage.addEventListener(Event.ENTER_FRAME,moveBall);
-			}
+		/*Just return if no change*/
+		private function noChange():void {
+			return;
 		}
 		
+		/*
+			PADDLE
+		*/
+		
+		private function attachpaddle():void {
+			Paddle=new paddle();
+			setPosition(Paddle,80,625);
+		}
+				
 		/*Move paddle function with mouse*/
 		private function movePaddleWithMouse(e:MouseEvent) {
 			/*The paddle follows the mouse*/
@@ -193,8 +191,98 @@
 			}
 			prevKey = key;
 		}
-		 
+		
+		
+		/*
+			BALL
+		*/
+		
+		 private function attachball() {
+			Ball=new ball();
+			setPosition(Ball,Paddle.x+Paddle.width/2,Paddle.y-Ball.width/2);
+			Ball.speedX=speedX;
+			Ball.speedY=speedY;
+		 }
+		
+		 private function moveBall(e:Event) {
+			Ball.x+=Ball.speedX;
+			Ball.y+=Ball.speedY;
+			//right side
+			if (Ball.x>(stage.stageWidth-Ball.width/2)) {
+				if (detection) {
+					detection=false;
+				}
+				Ball.speedX*=direction;
+			}
+			//down side
+			if (Ball.y>(stage.stageHeight+Ball.height)) {
+				balllost();
+			}
+			//right side
+			if (Ball.x<(Ball.width/2)) {
+				if (detection) {
+					detection=false;
+				}
+				Ball.speedX*=direction;
+			}
+			//up side
+			if (Ball.y<(Ball.height/2)) {
+				if (detection) {
+					detection=false;
+				}
+				Ball.speedY*=direction;
+			}
+			if (Paddle.hitTestObject(Ball) && !detection) {
+				changeballAngle();
+				detection=true;
+			}
+		}
+		
+		//change ball angle and direction when ball collide with the paddle
+		private function changeballAngle():void {
 
+			var ballPosition:Number = Ball.x-Paddle.x;
+			var hitPercent:Number = (ballPosition / (Paddle.width - Ball.width)) - .5;
+			Ball.speedX = hitPercent * 10;
+			//Making the ball bounce back up
+			Ball.speedY *= -1;
+
+		}
+		
+		private function balllost():void {
+			/*chanceLost();
+			if (Scoreboard.left>0) {
+				Less=new less();
+				setPosition(Less,500,308);
+				removeevents();
+				stage.addEventListener(MouseEvent.MOUSE_DOWN,resetBall);
+			}*/
+		}
+		public function set detection(_detection:Boolean) {
+			__detection=_detection;
+		}
+		
+		public function get detection():Boolean {
+			return __detection;
+		}
+		
+		
+		/*
+			START
+		*/
+		
+		private function attachstart():void {
+			Start=new start();
+			Start.buttonMode=true;
+			setPosition(Start,500,324);
+			Start.addEventListener(MouseEvent.CLICK,gameBegin);
+		}
+		
+		
+		/*
+			UTILITIES
+		*/
+		
 		private function setPosition(__object:MovieClip,__x:Number,__y:Number) {
 			addChild(__object);
 			__object.x=__x;
