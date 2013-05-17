@@ -3,8 +3,8 @@
 	import flash.events.*;
 	import utils.*;
 	import flash.events.Event;
-  import flash.events.KeyboardEvent;
-  import flash.ui.Keyboard;
+  	import flash.events.KeyboardEvent;
+  	import flash.ui.Keyboard;
 
 	public class BrickBreacker extends Sprite{
 		private var Paddle:MovieClip;
@@ -121,7 +121,6 @@
 				brick.y=_ydistance;
 				_base.addChild(brick);
 				(i+1)%10==0?_ydistance=_ydistance+brick.height:noChange();
-
 			}
 		}
 		
@@ -164,6 +163,7 @@
 		function movePaddleWithArrowKeys(e:KeyboardEvent):void
 		{
 			var key:uint = e.keyCode;
+			var prevKey:uint = e.keyCode;
 			var step:uint = 10;
 			switch (key){
 				case Keyboard.LEFT:
@@ -171,20 +171,27 @@
 						/*Keep the paddle on stage*/
 						Paddle.x = 0;
 					}
+					else if (prevKey == Keyboard.RIGHT){
+						Paddle.x -= step + step;
+					}
 					else{
 						Paddle.x -= step;
 					}
 				break;
-			  case Keyboard.RIGHT:
-				  if (Paddle.x > (stage.stageWidth - Paddle.width)) {
-					/*Keep the paddle on stage*/
-					Paddle.x = stage.stageWidth - Paddle.width;
-				  }
-				  else{
-					Paddle.x += step;
-				  }
-			 break;
+				case Keyboard.RIGHT:
+					if (Paddle.x > (stage.stageWidth - Paddle.width)) {
+						/*Keep the paddle on stage*/
+						Paddle.x = stage.stageWidth - Paddle.width;
+					}
+					else if (prevKey == Keyboard.LEFT){
+						Paddle.x += step + step;
+					}
+					else{
+						Paddle.x += step;
+					}
+			 	break;
 			}
+			prevKey = key;
 		}
 		 
 
