@@ -6,7 +6,7 @@
   	import flash.events.KeyboardEvent;
   	import flash.ui.Keyboard;
 
-	public class BrickBreacker extends Sprite{
+	public class BrickBreaker extends Sprite{
 		private var Paddle:MovieClip;
 		private var Ball:MovieClip;
 		private var speedX:Number=5;
@@ -22,7 +22,7 @@
 		private var Scoreboard:MovieClip;
 		private var keys:Array = [];
 		/*Constructor*/
-		public function BrickBreacker() {
+		public function BrickBreaker() {
 			init();
 		}
 		/*Call all methods to init tha stage*/
@@ -172,7 +172,7 @@
 						Paddle.x = 0;
 					}
 					else if (prevKey == Keyboard.RIGHT){
-						Paddle.x -= step + step;
+						Paddle.x -= (step + step);
 					}
 					else{
 						Paddle.x -= step;
@@ -184,7 +184,7 @@
 						Paddle.x = stage.stageWidth - Paddle.width;
 					}
 					else if (prevKey == Keyboard.LEFT){
-						Paddle.x += step + step;
+						Paddle.x += (step + step);
 					}
 					else{
 						Paddle.x += step;
