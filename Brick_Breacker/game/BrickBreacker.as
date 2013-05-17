@@ -27,7 +27,7 @@
 		}
 		/*Call all methods to init tha stage*/
 		private function init() {
-			stage.frameRate = 60; //mporei na min xreiazetai afou to exw valei stis ruthmiseis..
+			stage.frameRate = 100; //mporei na min xreiazetai afou to exw valei stis ruthmiseis..
 			attachpaddle();
 			attachBricks();
 			attachstart();
