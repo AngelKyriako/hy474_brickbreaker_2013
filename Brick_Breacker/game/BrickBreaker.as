@@ -2,6 +2,7 @@
 	import flash.display.*;
 	import flash.events.*;
 	import utils.*;
+	import game.bricks.*;
   	import flash.ui.Keyboard;
 
 	public class BrickBreaker extends Sprite{
@@ -22,10 +23,6 @@
 		
 		
 		public function BrickBreaker() {
-			init();
-		}
-		
-		private function init() {
 			stage.frameRate = 100;
 			attachpaddle();
 			attachball();
@@ -72,7 +69,7 @@
 				switch (id) {
 					case 1 :
 						brick=new blue();
-						//brick.hitObject=Ball;
+						brick.hitObject=Ball;
 						brick.parentClip=_base;
 						brick.baseClip=this;
 						brick.paddleClip=Paddle;
@@ -81,7 +78,7 @@
 						break;
 					case 2 :
 						brick=new cyan();
-						//brick.hitObject=Ball;
+						brick.hitObject=Ball;
 						brick.parentClip=_base;
 						brick.baseClip=this;
 						brick.paddleClip=Paddle;
@@ -89,7 +86,7 @@
 						break;
 					case 3 :
 						brick=new red();
-						//brick.hitObject=Ball;
+						brick.hitObject=Ball;
 						brick.parentClip=_base;
 						brick.baseClip=this;
 						brick.paddleClip=Paddle;
@@ -97,14 +94,14 @@
 						break;
 					case 4 :
 						brick=new green();
-						//brick.hitObject=Ball;
+						brick.hitObject=Ball;
 						brick.parentClip=_base;
 						brick.baseClip=this;
 						//brick.scoreboard=Scoreboard;
 						break;
 					case 5 :
 						brick=new yellow();
-						//brick.hitObject=Ball;
+						brick.hitObject=Ball;
 						brick.parentClip=_base;
 						brick.baseClip=this;
 						brick.paddleClip=Paddle;
