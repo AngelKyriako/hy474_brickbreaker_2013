@@ -21,7 +21,7 @@
 			
 			currentScoreField = new TextField();
 			currentLifesField = new TextField();
-			
+			//DEN DOULEUEI
 			setTextFieldFormat(currentScoreField);
 			setTextFieldFormat(currentLifesField);
         }

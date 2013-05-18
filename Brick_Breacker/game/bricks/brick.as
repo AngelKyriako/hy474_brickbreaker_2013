@@ -41,7 +41,7 @@
 				addChild(point);
 				point.x=this.width/2;
 				point.y=this.height/2;
-				//scoreboard.score+=10;
+				brGame.getScoreBoard().increaseScore(10);
 			}
 		}
 		public function deleteMotion():void {
