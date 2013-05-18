@@ -4,6 +4,8 @@
 	import utils.*;
 	import game.bricks.*;
   	import flash.ui.Keyboard;
+	    import flash.text.TextField;
+
 
 	public class BrickBreaker extends Sprite{
 		private var Paddle:MovieClip;
@@ -18,9 +20,10 @@
 		private var newGame:Boolean=false;
 		private var __detection:Boolean=false;
 		private var Less:MovieClip;
-		private var Scoreboard:MovieClip;
 		private var keys:Array = [];
-		
+		private var Score:ScoreBoard;
+	    private static const TRANSITION_LENGTH:uint = 500;  //the amount of time (in ms) which is needed to transition from one score value to another one
+            
 		
 		public function BrickBreaker() {
 			stage.frameRate = 100;
@@ -28,7 +31,9 @@
 			attachball();
 			attachstart();
 			attachBricks();
+			attachScoreBoard();
 		}
+		
 		
 		private function gameBegin(e:MouseEvent) {
 			removeChild(MovieClip(e.currentTarget));
@@ -274,6 +279,31 @@
 			Start.addEventListener(MouseEvent.CLICK,gameBegin);
 		}
 		
+		/*
+			SCOREBOARD
+		*/
+		private function attachScoreBoard(){
+			 Score = new ScoreBoard();
+			 
+			 Score.setTextFieldFormat(Score.getcurrentScoreField());
+			 Score.setTextFieldFormat(Score.getcurrentLifesField());
+			 
+			 setTextFieldPosition(Score.getcurrentScoreField(),10,580);
+			 setTextFieldPosition(Score.getcurrentLifesField(),10,620);
+			 
+			 addEventListener(Event.ENTER_FRAME, showScore, false, 0, true);
+			 addEventListener(Event.ENTER_FRAME, showLifes, false, 0, true);
+		}
+		
+        private function showScore(event:Event):void
+        {
+            Score.setcurrentScoreField(Score.addCommas(Score.getScore()));
+        }
+        
+		private function showLifes(event:Event):void
+        {
+            Score.setcurrentLifesField(Score.addCommas(Score.getLifes()));
+        }
 		
 		/*
 			UTILITIES
@@ -285,7 +315,13 @@
 			__object.y=__y;
 
 		}
+		private function setTextFieldPosition(__object:TextField,__x:Number,__y:Number) {
+			__object.textColor = 0xFF0000;
+			addChild(__object);
+			__object.x=__x;
+			__object.y=__y;
 
+		}
 	}
 	
 }
