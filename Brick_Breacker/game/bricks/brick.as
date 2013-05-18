@@ -6,9 +6,11 @@
 	import flash.display.Sprite;
 	
 	import game.bricks.*;
+	import game.BrickBreaker;
 	
 	public class brick extends MovieClip {
 		
+		private var brGame:BrickBreaker;
 		private var __parent:Sprite;
 		private var hitdetection=false;
 		private var _banner:MovieClip;
@@ -18,8 +20,10 @@
 		private var __paddleClip:MovieClip;
 		private var __bricks:Array;
 		private var __collide:Boolean;
+
 				
-		public function brick() {
+		public function brick(g:BrickBreaker) {
+			brGame = g;
 			collide=false;
 			addEventListener(Event.ENTER_FRAME,blastMe);
 		}
@@ -33,10 +37,10 @@
 				deleteMotion();
 				baseClip.detection=false;
 				detection=true;
-				//point=new points();
-				//addChild(point);
-				//point.x=this.width/2;
-				//point.y=this.height/2;
+				point=new points();
+				addChild(point);
+				point.x=this.width/2;
+				point.y=this.height/2;
 				//scoreboard.score+=10;
 			}
 		}
@@ -93,6 +97,10 @@
 		}
 		public function get collide():Boolean {
 			return __collide;
+		}
+		
+		public function getGame():BrickBreaker{
+			return brGame; 
 		}
 		
 	}

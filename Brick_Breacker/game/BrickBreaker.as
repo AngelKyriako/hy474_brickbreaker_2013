@@ -72,7 +72,7 @@
 				var id:Number= randRange(1,5);
 				switch (id) {
 					case 1 :
-						brick=new blue();
+						brick=new blue(this);
 						brick.hitObject=Ball;
 						brick.parentClip=_base;
 						brick.baseClip=this;
@@ -81,7 +81,7 @@
 						//brick.scoreboard=Scoreboard;
 						break;
 					case 2 :
-						brick=new cyan();
+						brick=new cyan(this);
 						brick.hitObject=Ball;
 						brick.parentClip=_base;
 						brick.baseClip=this;
@@ -89,7 +89,7 @@
 						//brick.scoreboard=Scoreboard;
 						break;
 					case 3 :
-						brick=new red();
+						brick=new red(this);
 						brick.hitObject=Ball;
 						brick.parentClip=_base;
 						brick.baseClip=this;
@@ -97,14 +97,14 @@
 						//brick.scoreboard=Scoreboard;
 						break;
 					case 4 :
-						brick=new green();
+						brick=new green(this);
 						brick.hitObject=Ball;
 						brick.parentClip=_base;
 						brick.baseClip=this;
 						//brick.scoreboard=Scoreboard;
 						break;
 					case 5 :
-						brick=new yellow();
+						brick=new yellow(this);
 						brick.hitObject=Ball;
 						brick.parentClip=_base;
 						brick.baseClip=this;
@@ -283,7 +283,7 @@
 			SCOREBOARD
 		*/
 		private function attachScoreBoard(){
-			 Score = new ScoreBoard();
+			 Score = new ScoreBoard(this);
 			 
 			 Score.setTextFieldFormat(Score.getcurrentScoreField());
 			 Score.setTextFieldFormat(Score.getcurrentLifesField());

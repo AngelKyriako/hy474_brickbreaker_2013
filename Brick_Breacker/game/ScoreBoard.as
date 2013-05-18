@@ -4,17 +4,19 @@
     import flash.display.Sprite;
     import flash.events.Event;
     import flash.text.*;
+	import game.*;
      
     public class ScoreBoard 
     {
-          
+        private var brGame:BrickBreaker;
         private var lifes:uint; 
         private var score:uint;
      	private var currentLifesField:TextField; 
         private var currentScoreField:TextField;
   
-        public function ScoreBoard()
-        {	lifes = 3;
+        public function ScoreBoard(g:BrickBreaker){	
+			brGame = g;
+			lifes = 3;
 			score = 0;
 			
 			currentScoreField = new TextField();
@@ -22,7 +24,6 @@
 			
 			setTextFieldFormat(currentScoreField);
 			setTextFieldFormat(currentLifesField);
-			
         }
 		
 		public function setTextFieldFormat(txt:TextField):void{
@@ -35,56 +36,7 @@
 			txt.setTextFormat(textF);
 		}
  
-        public function setScore(_value:uint):void
-        {
-            score = _value; 
-        }
-		 public function setLifes(_value:uint):void
-        {
-            lifes = _value; 
-        }
-         public function getScore():uint
-        {
-            return score; 
-        }
-		 public function getLifes():uint
-        {
-            return lifes;
-        }
-		
-		public function setcurrentLifesField(_value:String):void
-		{
-			currentLifesField.text = _value;
-		}
-		
-		public function setcurrentScoreField(_value:String):void
-		{
-			currentScoreField.text = _value;
-			
-		}
-		
-		public function getcurrentLifesField():TextField
-		{
-			return currentLifesField;
-		}
-		
-		public function getcurrentScoreField():TextField
-		{
-			return currentScoreField;
-		}
-		 
-        public function increaseScore(_change:uint):void
-        {
-            score += _change;
-        }
-        
-		public function decreaseLife():void
-        {
-            lifes -= 1;
-        }
-       
-        public function addCommas(_score:uint):String
-        {
+        public function addCommas(_score:uint):String{
             //a string, which will have the score with commas
             var scoreString:String = new String();
              
@@ -102,6 +54,19 @@
              
             return scoreString;
         }
-    }
+
+		public function setScore(_value:uint):void{ score = _value; }
+		public function setLifes(_value:uint):void{ lifes = _value; }
+		public function setcurrentLifesField(_value:String):void{ currentLifesField.text = _value; }
+		public function setcurrentScoreField(_value:String):void{ currentScoreField.text = _value; }
+		public function increaseScore(_change:uint):void{ score += _change; }
+		public function decreaseLife():void{ lifes -= 1; }
 	
+		public function getGame():BrickBreaker{ return brGame; }
+		public function getScore():uint{ return score; }
+		public function getLifes():uint{ return lifes; }	
+		public function getcurrentLifesField():TextField{ return currentLifesField; }
+		public function getcurrentScoreField():TextField{ return currentScoreField; }
+	
+	}
 }

@@ -1,11 +1,11 @@
 ﻿package game.bricks{
 	
-	import game.bricks.brick;
+	import game.*;
 	
 	public class yellow extends brick {
 		
-		public function yellow() {
-			super();
+		public function yellow(g:BrickBreaker) {
+			super(g);
 		}
 	}
 }
