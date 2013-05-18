@@ -1,29 +1,24 @@
 ﻿package game {
 	import flash.display.*;
 	import flash.events.*;
-	import utils.*;
 	import game.bricks.*;
+	import game.*;
   	import flash.ui.Keyboard;
 	    import flash.text.TextField;
 
 
 	public class BrickBreaker extends Sprite{
 		private var Paddle:MovieClip;
-		private var Ball:MovieClip;
-		private var speedX:Number=8;
-		private var speedY:Number=8;
-		private var direction:Number=-1;
+		private var Ball:ball;
+		private var __detection:Boolean;		
 		private var allBricks:Sprite;
 		private var bricksArray:Array=new Array();
 		private var Start:MovieClip;
 		private var newGame:Boolean=false;
-		private var __detection:Boolean=false;
-		private var lostBall:MovieClip;
 		private var keys:Array = [];
 		private var Score:ScoreBoard;
 	    private static const TRANSITION_LENGTH:uint = 500;  //the amount of time (in ms) which is needed to transition from one score value to another one
             
-		
 		public function BrickBreaker() {
 			stage.frameRate = 100;
 			attachpaddle();
@@ -41,19 +36,19 @@
 		}
 		
 		/* all events are declared here */
-		private function dispatchevents():void {
+		public function dispatchevents():void {
 			//all Events
 			if (newGame) {
 				stage.addEventListener(MouseEvent.MOUSE_MOVE,movePaddleWithMouse); /*Event Listener for mouse*/
 				stage.addEventListener(KeyboardEvent.KEY_DOWN, movePaddleWithArrowKeys); /*Event Listener for arrow keys*/
-				stage.addEventListener(Event.ENTER_FRAME,moveBall);
+				stage.addEventListener(Event.ENTER_FRAME,Ball.moveBall);
 			}
 		}
 		
-		private function removeevents() {
+		public function removeevents() {
 			stage.removeEventListener(MouseEvent.MOUSE_MOVE,movePaddleWithMouse);
 			stage.removeEventListener(MouseEvent.MOUSE_MOVE,movePaddleWithArrowKeys);
-			stage.removeEventListener(Event.ENTER_FRAME,moveBall);
+			stage.removeEventListener(Event.ENTER_FRAME,Ball.moveBall);
 		}
 		
 		/*
@@ -199,88 +194,10 @@
 		*/
 		
 		 private function attachball() {
-			Ball=new ball();
+			Ball=new ball(this);
 			setPosition(Ball,Paddle.x+Paddle.width/2,Paddle.y-Ball.width/2);
-			Ball.speedX=speedX;
-			Ball.speedY=speedY;
+			__detection = false;
 		 }
-		
-		 private function moveBall(e:Event) {
-			Ball.x+=Ball.speedX;
-			Ball.y+=Ball.speedY;
-			//right side
-			if (Ball.x>(stage.stageWidth-Ball.width/2)) {
-				if (detection) {
-					detection=false;
-				}
-				Ball.speedX*=direction;
-			}
-			//down side
-			if (Ball.y>(stage.stageHeight+Ball.height)) {
-				balllost();
-			}
-			//right side
-			if (Ball.x<(Ball.width/2)) {
-				if (detection) {
-					detection=false;
-				}
-				Ball.speedX*=direction;
-			}
-			//up side
-			if (Ball.y<(Ball.height/2)) {
-				if (detection) {
-					detection=false;
-				}
-				Ball.speedY*=direction;
-			}
-			if (Paddle.hitTestObject(Ball) && !detection) {
-				changeballAngle();
-				detection=true;
-			}
-		}
-		
-		//change ball angle and direction when ball collide with the paddle
-		private function changeballAngle():void {
-
-			var ballPosition:Number = Ball.x-Paddle.x;
-			var hitPercent:Number = (ballPosition / (Paddle.width - Ball.width)) - .5;
-			Ball.speedX = hitPercent * 10;
-			//Making the ball bounce back up
-			Ball.speedY *= -1;
-
-		}
-		
-		private function balllost():void {
-			
-			if ( Score.getLifes() > 0 ) {
-				Score.decreaseLife();
-				lostBall=new LostBall();
-				setPosition(lostBall,350,450);
-				removeevents();
-				stage.addEventListener(MouseEvent.MOUSE_DOWN,resetBall);
-			}
-			else{
-				//telos
-			}
-		}
-		
-		private function resetBall(e:Event):void {
-			removeChild(lostBall);
-			stage.removeEventListener(MouseEvent.MOUSE_DOWN,resetBall);
-			newGame=true;
-			Ball.x=Paddle.x+Paddle.width/2;
-			Ball.y=Paddle.y-Ball.width/2;
-			dispatchevents();
-		}
-		
-		public function set detection(_detection:Boolean) {
-			__detection=_detection;
-		}
-		
-		public function get detection():Boolean {
-			return __detection;
-		}
-		
 		
 		/*
 			START
@@ -323,13 +240,14 @@
 			UTILITIES
 		*/
 		
-		private function setPosition(__object:MovieClip,__x:Number,__y:Number) {
+		public function setPosition(__object:MovieClip,__x:Number,__y:Number) {
 			addChild(__object);
 			__object.x=__x;
 			__object.y=__y;
 
 		}
-		private function setTextFieldPosition(__object:TextField,__x:Number,__y:Number) {
+		
+		public function setTextFieldPosition(__object:TextField,__x:Number,__y:Number) {
 			__object.textColor = 0xFF0000;
 			addChild(__object);
 			__object.x=__x;
@@ -338,10 +256,17 @@
 		}
 		
 		
-		/*
-			ACCESSORS
-		*/
+		/* mutators */
+		public function setNewGame(b:Boolean){ newGame = b; }
+		public function set detection(_detection:Boolean) { __detection=_detection; }
+		
+		
+
+		/* accessors */		
 		public function getScoreBoard():ScoreBoard{ return Score; }
+		public function getPaddle():MovieClip{ return Paddle; }
+		public function getBall():MovieClip{ return Ball; }
+		public function get detection():Boolean { return __detection; }
 		
 	}
 	

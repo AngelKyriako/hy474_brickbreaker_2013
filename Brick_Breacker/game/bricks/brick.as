@@ -29,10 +29,10 @@
 		}
 		
 		private function blastMe(e:Event) {
-			if (!detection && this.hitTestObject(hitObject)) {
+			if (!detection && hitTestObject(hitObject)) {
 				//making the ball bounce off vertically
 				collide=true;
-				hitObject.speedY *= -1;
+				brGame.getBall().MultSpeedY(-1);
 				gotoAndStop(2);
 				deleteMotion();
 				baseClip.detection=false;
@@ -44,64 +44,27 @@
 				brGame.getScoreBoard().increaseScore(10);
 			}
 		}
-		public function deleteMotion():void {
-			removeEventListener(Event.ENTER_FRAME,blastMe);
-		}
-		public function set detection(_status:Boolean) {
-			hitdetection=_status;
-		}
-		public function get detection() {
-			return hitdetection;
-		}
-		public function removeMe() {
-			__parent.removeChild(DisplayObject(this) );
-		}
-		public function set parentClip(_parent:Sprite) {
-			__parent=_parent;
-		}
-		public function get parentClip():Sprite {
-			return __parent;
-		}
-		//get object
-		public function set hitObject(_hitObject:MovieClip) {
-			__hitObject=_hitObject;
-		}
-		public function get hitObject():MovieClip {
-			return __hitObject;
-		}
-		//detection test
-		//detection test
-		public function set baseClip(_baseClip:Sprite) {
-			__baseClip=_baseClip;
-		}
-		public function get baseClip() {
-			return __baseClip;
-		}
-		//paddle
-		public function set paddleClip(_paddleClip:MovieClip) {
-			__paddleClip=_paddleClip;
-		}
-		public function get paddleClip() {
-			return __paddleClip;
-		}
-		//set bricks
-		public function set bricks(_bricks:Array) {
-			__bricks=_bricks;
-		}
-		public function get bricks():Array {
-			return __bricks;
-		}
-		//
-		public function set collide(_collide:Boolean) {
-			__collide=_collide;
-		}
-		public function get collide():Boolean {
-			return __collide;
-		}
 		
-		public function getGame():BrickBreaker{
-			return brGame; 
-		}
+		/*mutators*/
+		public function deleteMotion():void { removeEventListener(Event.ENTER_FRAME,blastMe); }
+		public function removeMe() { __parent.removeChild(DisplayObject(this) ); }
 		
+		public function set hitObject(_hitObject:MovieClip) { __hitObject=_hitObject; }		
+		public function set detection(_status:Boolean) { hitdetection=_status; }
+		public function set parentClip(_parent:Sprite) { __parent=_parent; }		
+		public function set baseClip(_baseClip:Sprite) { __baseClip=_baseClip; }
+		public function set paddleClip(_paddleClip:MovieClip) { __paddleClip=_paddleClip; }
+		public function set bricks(_bricks:Array) { __bricks=_bricks; }
+		public function set collide(_collide:Boolean) { __collide=_collide; }
+				
+		/*accessors*/				
+		public function getGame():BrickBreaker { return brGame; }
+		public function get detection() { return hitdetection; }
+		public function get parentClip():Sprite { return __parent; }
+		public function get hitObject():MovieClip { return __hitObject; }
+		public function get baseClip() { return __baseClip; }
+		public function get paddleClip() { return __paddleClip; }
+		public function get bricks():Array { return __bricks; }
+		public function get collide():Boolean { return __collide; }				
 	}
 }
