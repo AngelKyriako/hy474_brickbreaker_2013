@@ -255,7 +255,7 @@
 			if ( Score.getLifes() > 0 ) {
 				Score.decreaseLife();
 				lostBall=new LostBall();
-				setPosition(lostBall,350,400);
+				setPosition(lostBall,350,450);
 				removeevents();
 				stage.addEventListener(MouseEvent.MOUSE_DOWN,resetBall);
 			}
