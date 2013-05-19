@@ -52,7 +52,7 @@
 				changeballAngle();
 				brGame.detection = true;
 				//Sound effect
-				SoundManager.PlayBallBouncing();
+				brGame.SoundsHolder.PlayBallBouncing();
 			}
 		}
 		

@@ -41,7 +41,7 @@
 				brGame.getScoreBoard().increaseScore(10);
 				brGame.getAllBricks().BrickHasBroken();
 				//Sound effect
-				SoundManager.PlayBrickBreaking();
+				brGame.SoundsHolder.PlayBrickBreaking();
 			}
 		}
 		

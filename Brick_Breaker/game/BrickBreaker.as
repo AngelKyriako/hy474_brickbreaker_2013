@@ -5,6 +5,7 @@
 	import flash.text.TextField;	
 	import game.bricks.*;
 	import game.*;
+	import game.SoundManager;
 
 
 	public class BrickBreaker extends Sprite{
@@ -17,6 +18,7 @@
 		private var Start:MovieClip;
 		private var WinorLost:MovieClip;
 		private var newGame:Boolean;
+		private var soundsHolder:SoundManager;
             
 		public function BrickBreaker() {
 			init();
@@ -27,10 +29,11 @@
 			stage.frameRate = 100;
 			attachpaddle();
 			attachball();
-			attachstart();
-			allBricks = new AllBricks(this, 100);
+			allBricks = new AllBricks(this, 150);
 			attachScoreBoard();
+			attachstart();
 			newGame = false;
+			soundsHolder = new SoundManager(true);
 		}
 		/* Paddle */
 		private function attachpaddle():void {
@@ -107,13 +110,13 @@
 				WinorLost = new WinningScreen();
 				setPosition(WinorLost,120,0);
 				//sound effect
-				//SoundManager.PlayWinSound();
+				soundsHolder.PlayWinSound();
 			}
 			else{
 				WinorLost = new LosingScreen();
 				setPosition(WinorLost,120,0);
 				//sound effect
-				SoundManager.PlayLoseSound();
+				soundsHolder.PlayLoseSound();
 			}
 			removesymbols();
 			removeevents();
@@ -126,6 +129,7 @@
 			WinorLost.removeEventListener(MouseEvent.MOUSE_DOWN,restart);
 			removeChild(WinorLost);
 			init();
+			soundsHolder.StopSoundtrack();
 		}
 		
 		/* mutators */
@@ -145,7 +149,6 @@
 		public function setNewGame(b:Boolean){ newGame = b; }
 		public function set detection(_detection:Boolean) { __detection=_detection; }
 
-
 		/* accessors */		
 		
 		public function getAllBricks():AllBricks{ return allBricks; }
@@ -153,6 +156,7 @@
 		public function getPaddle():paddle{ return Paddle; }
 		public function getBall():ball{ return Ball; }
 		public function get detection():Boolean { return __detection; }
+		public function get SoundsHolder():SoundManager { return soundsHolder; }
 		
 	}
 }

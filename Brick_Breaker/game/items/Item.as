@@ -2,7 +2,7 @@
 	
 	import flash.display.*;
 	import flash.events.*;
-	import game.BrickBreaker;
+	import game.*;
 	
 	public class Item extends MovieClip {
 		
@@ -22,6 +22,7 @@
 					speed = 0;
 					itemAcquired();
 					removeMe();
+					brGame.SoundsHolder.PlayPowerUp();
 				}
 		}
 		
