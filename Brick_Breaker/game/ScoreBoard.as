@@ -72,6 +72,7 @@
 		public function setcurrentLifesField(_value:String):void{ currentLifesField.text = _value; }
 		public function setcurrentScoreField(_value:String):void{ currentScoreField.text = _value; }
 		public function increaseScore(_change:uint):void{ score += _change; }
+		public function IncreaseLife():void{ lifes += 1; }		
 		public function decreaseLife():void{ lifes -= 1; }
 	
 		public function getGame():BrickBreaker{ return brGame; }

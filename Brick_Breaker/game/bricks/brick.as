@@ -22,6 +22,8 @@
 		
 		private function blastMe(e:Event) {
 			if (!detection && hitTestObject(brGame.getBall()) ) {
+				DropItem();
+				
 				//making the ball bounce off vertically
 				brGame.getBall().MultSpeedY(-1);
 				gotoAndStop(2);
@@ -36,6 +38,8 @@
 				brGame.getAllBricks().BrickHasBroken();
 			}
 		}
+		
+		public function DropItem():void { /* overriden in subclasses */ }
 		
 		/*mutators*/
 		public function deleteMotion():void { removeEventListener(Event.ENTER_FRAME,blastMe); }
