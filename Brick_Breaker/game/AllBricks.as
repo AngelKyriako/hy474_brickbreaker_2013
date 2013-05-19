@@ -33,7 +33,7 @@
 			for (var i:int=0; i<bricksNumber; i++) {
 				var brick:MovieClip;
 				bricksArray.push(brick);
-				var id:Number= randRange(1,5);
+				var id:Number= brGame.randRange(1,5);
 				switch (id) {
 					case 1 :
 						brick=new blue(brGame);
@@ -62,12 +62,6 @@
 		}
 		
 		private function NoChange():void { return; }		
-		
-		/*random generation of bricks array*/
-		private function randRange(min:Number,max:Number):Number {
-			var randomNum:Number=Math.floor(Math.random() * max - min + 1) + min;
-			return randomNum;
-		}
 		
 		/* mutator */
 		public function BrickHasBroken():void{

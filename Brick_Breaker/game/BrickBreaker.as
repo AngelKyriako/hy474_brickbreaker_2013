@@ -93,7 +93,12 @@
 			removeChild(allBricks);
 			Score.removeScore(Score);
 		}
-
+		
+		/*random generation between mix and max*/
+		public function randRange(min:Number,max:Number):Number {
+			var randomNum:Number=Math.floor(Math.random() * max - min + 1) + min;
+			return randomNum;
+		}
 
 		/* ending game */
 		public function GameOver(isWin:Boolean):void{
@@ -138,6 +143,7 @@
 
 
 		/* accessors */		
+		
 		public function getAllBricks():AllBricks{ return allBricks; }
 		public function getScoreBoard():ScoreBoard{ return Score; }
 		public function getPaddle():paddle{ return Paddle; }
@@ -145,5 +151,4 @@
 		public function get detection():Boolean { return __detection; }
 		
 	}
-	
 }

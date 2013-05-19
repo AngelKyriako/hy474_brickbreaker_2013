@@ -10,7 +10,7 @@
 		}
 		
 		override public function DropItem():void{
-			var itm:bullet = new bullet(getGame());
+			var itm:mango = new mango(getGame());
 			getGame().setPosition(itm, x+width/2 ,y+height);
 		}
 	}

@@ -22,7 +22,9 @@
 		
 		private function blastMe(e:Event) {
 			if (!detection && hitTestObject(brGame.getBall()) ) {
-				DropItem();
+				// drop items sometimes
+				if (brGame.randRange(1,5) == 1)
+					DropItem();
 				
 				//making the ball bounce off vertically
 				brGame.getBall().MultSpeedY(-1);
