@@ -15,6 +15,8 @@
 		private var Score:ScoreBoard;
 		private var __detection:Boolean;		
 		private var Start:MovieClip;
+		private var Win:MovieClip;
+		private var Lost:MovieClip;
 		private var newGame:Boolean;
             
 		public function BrickBreaker() {
@@ -88,16 +90,15 @@
 		/* ending game */
 		public function GameOver(isWin:Boolean):void{
 
- 			var loader:Loader = new Loader();			
-			
-			if (isWin){
-				loader.load(new URLRequest("../photos/WinningScreen.png"));
+ 			if (isWin){
+				Win = new WinningScreen();
+				setPosition(Win,120,0);
 			}
 			else{
-				loader.load(new URLRequest("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSIVYpFQT6guS61jMvmoQ5E6zqFVZuPr4-oQ-vk2ppAmXViKLZWfA"));
+				Lost = new LosingScreen();
+				setPosition(Lost,120,0);
 			}
 			removeevents();
-			addChild(loader);
 		}
 		public function HaveWinner():Boolean { return (allBricks.getBricksCount() == 0); }
 		public function HaveLoser():Boolean { return (Score.getLifes() == 0); }
