@@ -66,7 +66,7 @@
 		
 		private function balllost():void {
 			
-			if ( brGame.getScoreBoard().getLifes() > 0 ) {
+			if ( !brGame.HaveLoser() ) {
 				brGame.getScoreBoard().decreaseLife();
 				lostBall=new LostBall();
 				brGame.setPosition(lostBall,350,450);
@@ -74,7 +74,7 @@
 				brGame.stage.addEventListener(MouseEvent.MOUSE_DOWN,resetBall);
 			}
 			else{
-				//telos
+				brGame.GameOver(false);
 			}
 		}
 		

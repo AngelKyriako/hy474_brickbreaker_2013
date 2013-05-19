@@ -1,9 +1,10 @@
 ﻿package game {
 	import flash.display.*;
 	import flash.events.*;
+	import flash.net.*;
+	import flash.text.TextField;	
 	import game.bricks.*;
 	import game.*;
-	import flash.text.TextField;
 
 
 	public class BrickBreaker extends Sprite{
@@ -21,7 +22,7 @@
 			attachpaddle();
 			attachball();
 			attachstart();
-			allBricks = new AllBricks(this);
+			allBricks = new AllBricks(this, 100);
 			attachScoreBoard();
 			newGame = false;
 		}
@@ -83,6 +84,24 @@
 			stage.removeEventListener(Event.ENTER_FRAME, Score.showLifes);
 		}
 
+
+		/* ending game */
+		public function GameOver(isWin:Boolean):void{
+
+ 			var loader:Loader = new Loader();			
+			
+			if (isWin){
+				loader.load(new URLRequest("../photos/WinningScreen.png"));
+			}
+			else{
+				loader.load(new URLRequest("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSIVYpFQT6guS61jMvmoQ5E6zqFVZuPr4-oQ-vk2ppAmXViKLZWfA"));
+			}
+			removeevents();
+			addChild(loader);
+		}
+		public function HaveWinner():Boolean { return (allBricks.getBricksCount() == 0); }
+		public function HaveLoser():Boolean { return (Score.getLifes() == 0); }
+		
 		
 		/* mutators */
 		
@@ -103,6 +122,7 @@
 
 
 		/* accessors */		
+		public function getAllBricks():AllBricks{ return allBricks; }
 		public function getScoreBoard():ScoreBoard{ return Score; }
 		public function getPaddle():paddle{ return Paddle; }
 		public function getBall():ball{ return Ball; }
