@@ -15,11 +15,15 @@
 		private var Score:ScoreBoard;
 		private var __detection:Boolean;		
 		private var Start:MovieClip;
-		private var Win:MovieClip;
-		private var Lost:MovieClip;
+		private var WinorLost:MovieClip;
 		private var newGame:Boolean;
             
 		public function BrickBreaker() {
+			init();
+		}
+		
+		/* initialization */
+		public function init():void{
 			stage.frameRate = 100;
 			attachpaddle();
 			attachball();
@@ -28,9 +32,6 @@
 			attachScoreBoard();
 			newGame = false;
 		}
-		
-		/* initialization */
-		
 		/* Paddle */
 		private function attachpaddle():void {
 			Paddle=new paddle(this);
@@ -85,24 +86,38 @@
 			stage.removeEventListener(Event.ENTER_FRAME, Score.showScore);
 			stage.removeEventListener(Event.ENTER_FRAME, Score.showLifes);
 		}
+		
+		public function removesymbols(){
+			removeChild(Paddle);
+			removeChild(Ball);
+			removeChild(allBricks);
+			Score.removeScore(Score);
+		}
 
 
 		/* ending game */
 		public function GameOver(isWin:Boolean):void{
-
- 			if (isWin){
-				Win = new WinningScreen();
-				setPosition(Win,120,0);
+ 			
+			if (isWin){
+				WinorLost = new WinningScreen();
+				setPosition(WinorLost,120,0);
 			}
 			else{
-				Lost = new LosingScreen();
-				setPosition(Lost,120,0);
+				WinorLost = new LosingScreen();
+				setPosition(WinorLost,120,0);
 			}
+			removesymbols();
 			removeevents();
+			WinorLost.addEventListener(MouseEvent.MOUSE_DOWN,restart);
 		}
 		public function HaveWinner():Boolean { return (allBricks.getBricksCount() == 0); }
 		public function HaveLoser():Boolean { return (Score.getLifes() == 0); }
 		
+		public function restart(e:Event):void{
+			WinorLost.removeEventListener(MouseEvent.MOUSE_DOWN,restart);
+			removeChild(WinorLost);
+			init();
+		}
 		
 		/* mutators */
 		

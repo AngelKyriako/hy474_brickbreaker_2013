@@ -62,6 +62,10 @@
              
             return scoreString;
         }
+		public function removeScore(_score:ScoreBoard){
+			currentScoreField.parent.removeChild(currentScoreField);
+			currentLifesField.parent.removeChild(currentLifesField);
+		}
 
 		public function setScore(_value:uint):void{ score = _value; }
 		public function setLifes(_value:uint):void{ lifes = _value; }
