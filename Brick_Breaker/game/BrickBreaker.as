@@ -2,6 +2,7 @@
 	import flash.display.*;
 	import flash.events.*;
 	import flash.net.*;
+  	import flash.ui.Keyboard;	
 	import flash.text.TextField;	
 	import game.bricks.*;
 	import game.*;
@@ -19,7 +20,9 @@
 		private var WinorLost:MovieClip;
 		private var newGame:Boolean;
 		private var soundsHolder:SoundManager;
-            
+		private var ToggleButtonPlay:MovieClip;
+        private var ToggleButtonStop:MovieClip;    
+			
 		public function BrickBreaker() {
 			init();
 		}
@@ -29,16 +32,17 @@
 			stage.frameRate = 100;
 			attachpaddle();
 			attachball();
-			allBricks = new AllBricks(this, 150);
+			allBricks = new AllBricks(this, 100);
 			attachScoreBoard();
 			attachstart();
+			attachStopButton();
 			newGame = false;
 			soundsHolder = new SoundManager(true);
 		}
 		/* Paddle */
 		private function attachpaddle():void {
 			Paddle=new paddle(this);
-			setPosition(Paddle,80,625);
+			setPosition(Paddle,420,625);
 		}
 		
 		/* Ball */
@@ -51,9 +55,39 @@
 		/* ScoreBoard */
 		private function attachScoreBoard(){
 			 Score = new ScoreBoard(this);
-			 
 			 setTextFieldPosition(Score.getcurrentScoreField(),10,560);
 			 setTextFieldPosition(Score.getcurrentLifesField(),10,610);
+		}
+		
+		/*Sound Buttons*/
+		public function attachPlayButton():void{
+			ToggleButtonPlay = new playSounds();
+			setPosition(ToggleButtonPlay,950,600);
+			stage.addEventListener(KeyboardEvent.KEY_DOWN,pressedPlay);
+		}
+		
+		public function attachStopButton():void{
+			ToggleButtonStop = new stopSounds();
+			setPosition(ToggleButtonStop,950,600);
+			stage.addEventListener(KeyboardEvent.KEY_DOWN,pressedStop);
+		}
+		
+		public function pressedPlay(e:KeyboardEvent):void{
+			soundsHolder.setSoundtrackActive(true);
+			if(contains(ToggleButtonPlay) && (e.keyCode == Keyboard.DOWN)){
+				removeChild(ToggleButtonPlay);
+				stage.removeEventListener(KeyboardEvent.KEY_DOWN,pressedPlay);
+			}
+			attachStopButton();
+		}
+		
+		public function pressedStop(e:KeyboardEvent):void{
+			soundsHolder.setSoundtrackActive(false);
+			if(contains(ToggleButtonStop) && (e.keyCode == Keyboard.DOWN)){
+				removeChild(ToggleButtonStop);
+				stage.removeEventListener(KeyboardEvent.KEY_DOWN,pressedStop);
+			}
+			attachPlayButton();
 		}
 		
 		/* Start button */
