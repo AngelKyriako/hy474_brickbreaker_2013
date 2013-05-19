@@ -51,6 +51,8 @@
 			if (brGame.getPaddle().hitTestObject(this) && !brGame.detection) {
 				changeballAngle();
 				brGame.detection = true;
+				//Sound effect
+				SoundManager.PlayBallBouncing();
 			}
 		}
 		

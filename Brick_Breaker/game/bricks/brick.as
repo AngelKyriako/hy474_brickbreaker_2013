@@ -6,7 +6,7 @@
 	import flash.display.Sprite;
 	
 	import game.bricks.*;
-	import game.BrickBreaker;
+	import game.*;
 	
 	public class brick extends MovieClip {
 		
@@ -21,7 +21,9 @@
 		}
 		
 		private function blastMe(e:Event) {
+
 			if (!detection && hitTestObject(brGame.getBall()) ) {
+				
 				// drop items sometimes
 				if (brGame.randRange(1,5) == 1)
 					DropItem();
@@ -38,6 +40,8 @@
 				point.y=this.height/2;
 				brGame.getScoreBoard().increaseScore(10);
 				brGame.getAllBricks().BrickHasBroken();
+				//Sound effect
+				SoundManager.PlayBrickBreaking();
 			}
 		}
 		

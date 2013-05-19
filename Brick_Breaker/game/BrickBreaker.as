@@ -106,10 +106,14 @@
 			if (isWin){
 				WinorLost = new WinningScreen();
 				setPosition(WinorLost,120,0);
+				//sound effect
+				//SoundManager.PlayWinSound();
 			}
 			else{
 				WinorLost = new LosingScreen();
 				setPosition(WinorLost,120,0);
+				//sound effect
+				SoundManager.PlayLoseSound();
 			}
 			removesymbols();
 			removeevents();
