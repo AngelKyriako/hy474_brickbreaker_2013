@@ -1,8 +1,6 @@
 ﻿package  game{
 
-    import fl.transitions.easing.*;  
-    import flash.display.Sprite;
-    import flash.events.Event;
+    import flash.events.*;
     import flash.text.*;
 	import game.*;
      
@@ -21,7 +19,7 @@
 			
 			currentScoreField = new TextField();
 			currentLifesField = new TextField();
-			//DEN DOULEUEI
+			
 			setTextFieldFormat(currentScoreField);
 			setTextFieldFormat(currentLifesField);
         }
@@ -29,12 +27,22 @@
 		public function setTextFieldFormat(txt:TextField):void{
 			var textF:TextFormat = new TextFormat();
 			
-			textF.font = "Tahoma";          // Defines the font used
+			textF.font = "Tahoma";         // Defines the font used
 			textF.color = 0x5678fe;        // Color
-			textF.size = 20;               // Text size (in pixels)
+			textF.size = 25;               // Text size (in pixels)
 			
-			txt.setTextFormat(textF);
+			txt.width = 300;
+			
+			txt.defaultTextFormat = textF;
 		}
+		
+		public function showScore(event:Event):void {
+            currentScoreField.text = "Score:\t" + addCommas(score);
+        }
+        
+		public function showLifes(event:Event):void {
+            currentLifesField.text = "Lifes:\t" + addCommas(lifes);
+        }
  
         public function addCommas(_score:uint):String{
             //a string, which will have the score with commas
@@ -47,7 +55,7 @@
             //add the commas to the string
             for (var i:uint=0; i<scoreLength; i++) { 
                 if ((scoreLength-i)%3 == 0 && i != 0) {
-                    scoreString += ",";
+                    scoreString += ".";
                 }
                 scoreString += _score.toString().charAt(i);
             }

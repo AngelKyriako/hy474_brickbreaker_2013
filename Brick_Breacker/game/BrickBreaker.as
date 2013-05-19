@@ -26,51 +26,30 @@
 			newGame = false;
 		}
 		
+		/* initialization */
 		
-		private function gameBegin(e:MouseEvent) {
-			removeChild(MovieClip(e.currentTarget));
-			newGame=true;
-			dispatchevents();
-		}
-		
-		/* all events are declared here */
-		public function dispatchevents():void {
-			//all Events
-			if (newGame) {
-				stage.addEventListener(MouseEvent.MOUSE_MOVE,Paddle.movePaddleWithMouse); /*Event Listener for mouse*/
-				stage.addEventListener(KeyboardEvent.KEY_DOWN, Paddle.movePaddleWithArrowKeys); /*Event Listener for arrow keys*/
-				stage.addEventListener(Event.ENTER_FRAME,Ball.moveBall);
-			}
-		}
-		
-		public function removeevents() {
-			stage.removeEventListener(MouseEvent.MOUSE_MOVE,Paddle.movePaddleWithMouse);
-			stage.removeEventListener(MouseEvent.MOUSE_MOVE,Paddle.movePaddleWithArrowKeys);
-			stage.removeEventListener(Event.ENTER_FRAME,Ball.moveBall);
-		}
-		
-		/*
-			PADDLE
-		*/
+		/* Paddle */
 		private function attachpaddle():void {
 			Paddle=new paddle(this);
 			setPosition(Paddle,80,625);
 		}
 		
-		/*
-			BALL
-		*/
-		
-		 private function attachball() {
+		/* Ball */
+		private function attachball() {
 			Ball=new ball(this);
 			setPosition(Ball,Paddle.x+Paddle.width/2,Paddle.y-Ball.width/2);
 			__detection = false;
-		 }
+		}
 		
-		/*
-			START
-		*/
+		/* ScoreBoard */
+		private function attachScoreBoard(){
+			 Score = new ScoreBoard(this);
+			 
+			 setTextFieldPosition(Score.getcurrentScoreField(),10,560);
+			 setTextFieldPosition(Score.getcurrentLifesField(),10,610);
+		}
 		
+		/* Start button */
 		private function attachstart():void {
 			Start=new start();
 			Start.buttonMode=true;
@@ -78,55 +57,50 @@
 			Start.addEventListener(MouseEvent.CLICK,gameBegin);
 		}
 		
-		/*
-			SCOREBOARD
-		*/
-		private function attachScoreBoard(){
-			 Score = new ScoreBoard(this);
-			 
-			 Score.setTextFieldFormat(Score.getcurrentScoreField());
-			 Score.setTextFieldFormat(Score.getcurrentLifesField());
-			 
-			 setTextFieldPosition(Score.getcurrentScoreField(),10,580);
-			 setTextFieldPosition(Score.getcurrentLifesField(),10,620);
-			 
-			 addEventListener(Event.ENTER_FRAME, showScore, false, 0, true);
-			 addEventListener(Event.ENTER_FRAME, showLifes, false, 0, true);
+		private function gameBegin(e:MouseEvent) {
+			removeChild(MovieClip(e.currentTarget));
+			newGame=true;
+			dispatchevents();
 		}
 		
-        private function showScore(event:Event):void
-        {
-            Score.setcurrentScoreField(Score.addCommas(Score.getScore()));
-        }
-        
-		private function showLifes(event:Event):void
-        {
-            Score.setcurrentLifesField(Score.addCommas(Score.getLifes()));
-        }
+		/* About events */
+		public function dispatchevents():void {
+			//all Events
+			if (newGame) {
+				stage.addEventListener(MouseEvent.MOUSE_MOVE, Paddle.movePaddleWithMouse); /*Event Listener for mouse*/
+				stage.addEventListener(KeyboardEvent.KEY_DOWN, Paddle.movePaddleWithArrowKeys); /*Event Listener for arrow keys*/
+				stage.addEventListener(Event.ENTER_FRAME, Ball.moveBall);
+				stage.addEventListener(Event.ENTER_FRAME, Score.showScore);
+			 	stage.addEventListener(Event.ENTER_FRAME, Score.showLifes);
+			}
+		}
 		
-		/*
-			UTILITIES
-		*/
+		public function removeevents() {
+			stage.removeEventListener(MouseEvent.MOUSE_MOVE, Paddle.movePaddleWithMouse);
+			stage.removeEventListener(MouseEvent.MOUSE_MOVE, Paddle.movePaddleWithArrowKeys);
+			stage.removeEventListener(Event.ENTER_FRAME, Ball.moveBall);
+			stage.removeEventListener(Event.ENTER_FRAME, Score.showScore);
+			stage.removeEventListener(Event.ENTER_FRAME, Score.showLifes);
+		}
+
+		
+		/* mutators */
 		
 		public function setPosition(__object:MovieClip,__x:Number,__y:Number) {
 			addChild(__object);
 			__object.x=__x;
 			__object.y=__y;
-
 		}
 		
 		public function setTextFieldPosition(__object:TextField,__x:Number,__y:Number) {
-			__object.textColor = 0xFF0000;
 			addChild(__object);
 			__object.x=__x;
 			__object.y=__y;
-
 		}
 		
-		
-		/* mutators */
 		public function setNewGame(b:Boolean){ newGame = b; }
 		public function set detection(_detection:Boolean) { __detection=_detection; }
+
 
 		/* accessors */		
 		public function getScoreBoard():ScoreBoard{ return Score; }
