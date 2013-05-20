@@ -16,13 +16,17 @@
 		}
 		
 		public function moveMe(e:Event) {
-				e.currentTarget.y>(700)?removeMe():e.currentTarget.y+=speed;
-				if (e.currentTarget.hitTestObject(brGame.getPaddle() )) {
-					e.currentTarget.gotoAndPlay(2);
-					speed = 0;
-					itemAcquired();
-					removeMe();
-					brGame.SoundsHolder.PlayPowerUp();
+				if (!brGame.GameIsPaused){
+					
+					e.currentTarget.y>(700)?removeMe():e.currentTarget.y+=speed;
+					
+					if (e.currentTarget.hitTestObject(brGame.getPaddle() )) {
+						e.currentTarget.gotoAndPlay(2);
+						speed = 0;
+						itemAcquired();
+						removeMe();
+						brGame.SoundsHolder.PlayPowerUp();
+					}
 				}
 		}
 		

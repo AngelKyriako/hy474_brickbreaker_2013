@@ -21,7 +21,8 @@
 		private var newGame:Boolean;
 		private var soundsHolder:SoundManager;
 		private var ToggleButtonPlay:MovieClip;
-        private var ToggleButtonStop:MovieClip;    
+        private var ToggleButtonStop:MovieClip;
+		private var gameIsPaused:Boolean;
 			
 		public function BrickBreaker() {
 			init();
@@ -37,6 +38,7 @@
 			attachstart();
 			attachStopButton();
 			newGame = false;
+			gameIsPaused = false;
 			soundsHolder = new SoundManager(true);
 		}
 		/* Paddle */
@@ -74,7 +76,7 @@
 		
 		public function pressedPlay(e:KeyboardEvent):void{
 			soundsHolder.setSoundtrackActive(true);
-			if(contains(ToggleButtonPlay) && (e.keyCode == Keyboard.DOWN)){
+			if(contains(ToggleButtonPlay) && (e.keyCode == Keyboard.M)){
 				removeChild(ToggleButtonPlay);
 				stage.removeEventListener(KeyboardEvent.KEY_DOWN,pressedPlay);
 			}
@@ -83,7 +85,7 @@
 		
 		public function pressedStop(e:KeyboardEvent):void{
 			soundsHolder.setSoundtrackActive(false);
-			if(contains(ToggleButtonStop) && (e.keyCode == Keyboard.DOWN)){
+			if(contains(ToggleButtonStop) && (e.keyCode == Keyboard.M)){
 				removeChild(ToggleButtonStop);
 				stage.removeEventListener(KeyboardEvent.KEY_DOWN,pressedStop);
 			}
@@ -113,6 +115,7 @@
 				stage.addEventListener(Event.ENTER_FRAME, Ball.moveBall);
 				stage.addEventListener(Event.ENTER_FRAME, Score.showScore);
 			 	stage.addEventListener(Event.ENTER_FRAME, Score.showLifes);
+				stage.addEventListener(KeyboardEvent.KEY_DOWN,PauseResumeGame);
 			}
 		}
 		
@@ -122,6 +125,7 @@
 			stage.removeEventListener(Event.ENTER_FRAME, Ball.moveBall);
 			stage.removeEventListener(Event.ENTER_FRAME, Score.showScore);
 			stage.removeEventListener(Event.ENTER_FRAME, Score.showLifes);
+			stage.removeEventListener(KeyboardEvent.KEY_DOWN,PauseResumeGame);
 		}
 		
 		public function removesymbols(){
@@ -135,6 +139,12 @@
 		public function randRange(min:Number,max:Number):Number {
 			var randomNum:Number=Math.floor(Math.random() * max - min + 1) + min;
 			return randomNum;
+		}
+		
+		/* pausing game */
+		public function PauseResumeGame(e:KeyboardEvent):void{
+			if (e.keyCode == Keyboard.P)
+				gameIsPaused = !gameIsPaused;
 		}
 
 		/* ending game */
@@ -191,6 +201,6 @@
 		public function getBall():ball{ return Ball; }
 		public function get detection():Boolean { return __detection; }
 		public function get SoundsHolder():SoundManager { return soundsHolder; }
-		
+		public function get GameIsPaused():Boolean { return gameIsPaused; }
 	}
 }

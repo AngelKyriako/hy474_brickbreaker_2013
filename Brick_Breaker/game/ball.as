@@ -21,8 +21,10 @@
 		}
 		
 		public function moveBall(e:Event) {
-			x+=speedX;
-			y+=speedY;
+			if (!brGame.GameIsPaused){
+				x+=speedX;
+				y+=speedY;
+			}
 			//right side
 			if (x>(brGame.stage.stageWidth - width/2)) {
 				if (brGame.detection) {
