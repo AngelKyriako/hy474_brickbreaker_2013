@@ -30,7 +30,7 @@
 		
 		/* initialization */
 		public function init():void{
-			stage.frameRate = 100;
+			stage.frameRate = 60;
 			attachpaddle();
 			attachball();
 			allBricks = new AllBricks(this, 100);

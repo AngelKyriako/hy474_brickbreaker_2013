@@ -40,6 +40,7 @@
 				point.y=this.height/2;
 				brGame.getScoreBoard().increaseScore(10);
 				brGame.getAllBricks().BrickHasBroken();
+				
 				//Sound effect
 				brGame.SoundsHolder.PlayBrickBreaking();
 			}
@@ -49,7 +50,7 @@
 		
 		/*mutators*/
 		public function deleteMotion():void { removeEventListener(Event.ENTER_FRAME,blastMe); }
-		public function removeMe() { brGame.getAllBricks().removeChild(DisplayObject(this) ); }
+		public function removeMe() { brGame.getAllBricks().removeChild(this); }
 		public function set detection(_status:Boolean) { hitdetection=_status; }
 
 				
