@@ -11,7 +11,7 @@
 		}
 		
 		override public function itemAcquired():void{
-			brGame.getScoreBoard().increaseScore(150);
+			brGame.getScoreBoard().increaseScore(100);
 		}
 		
 	}
