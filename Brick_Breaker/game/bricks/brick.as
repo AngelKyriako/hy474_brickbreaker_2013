@@ -11,33 +11,32 @@
 	public class brick extends MovieClip {
 		
 		private var brGame:BrickBreaker;
-		private var hitdetection=false;
+		//private var hitdetection=false;
 		private var point:MovieClip;
 
 				
 		public function brick(g:BrickBreaker) {
 			brGame = g;
-			addEventListener(Event.ENTER_FRAME,blastMe);
+			addEventListener(Event.ENTER_FRAME,ExplodeMe);
 		}
 		
-		private function blastMe(e:Event) {
+		private function ExplodeMe(e:Event) {
 
-			if (!detection && hitTestObject(brGame.getBall()) ) {
+			if (hitTestObject(brGame.getBall()) ) {
 				
 				// drop items sometimes
 				if (brGame.randRange(1,5) == 1)
 					DropItem();
 				
+				// display the points
+				CreatePoint();				
+				
 				//making the ball bounce off vertically
 				brGame.getBall().MultSpeedY(-1);
 				gotoAndStop(2);
 				deleteMotion();
-				brGame.detection=false;
-				detection=true;
-				point=new points();
-				addChild(point);
-				point.x=this.width/2;
-				point.y=this.height/2;
+				brGame.BallReadyForBouncing=true;
+				//detection=true;
 				brGame.getScoreBoard().increaseScore(10);
 				brGame.getAllBricks().BrickHasBroken();
 				
@@ -47,16 +46,21 @@
 		}
 		
 		public function DropItem():void { /* overriden in subclasses */ }
-		
+		public function CreatePoint():void{
+				point=new points();
+				addChild(point);
+				point.x=this.width/2;
+				point.y=this.height/2;
+		}
 		/*mutators*/
-		public function deleteMotion():void { removeEventListener(Event.ENTER_FRAME,blastMe); }
+		public function deleteMotion():void { removeEventListener(Event.ENTER_FRAME,ExplodeMe); }
 		public function removeMe() { brGame.getAllBricks().removeChild(this); }
-		public function set detection(_status:Boolean) { hitdetection=_status; }
+		//public function set detection(_status:Boolean) { hitdetection=_status; }
 
 				
 		/*accessors*/				
 		public function getGame():BrickBreaker { return brGame; }
-		public function get detection() { return hitdetection; }
+		//public function get detection() { return hitdetection; }
 
 	}
 }

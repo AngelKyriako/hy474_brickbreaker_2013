@@ -15,7 +15,7 @@
 		private var Paddle:paddle;
 		private var Ball:ball;
 		private var Score:ScoreBoard;
-		private var __detection:Boolean;		
+		private var ballReadyForBouncing:Boolean;		
 		private var Start:MovieClip;
 		private var WinorLost:MovieClip;
 		private var newGame:Boolean;
@@ -51,7 +51,7 @@
 		private function attachball() {
 			Ball=new ball(this);
 			setPosition(Ball,Paddle.x+Paddle.width/2,Paddle.y-Ball.width/2);
-			__detection = false;
+			BallReadyForBouncing = true;
 		}
 		
 		/* ScoreBoard */
@@ -191,7 +191,7 @@
 		}
 		
 		public function setNewGame(b:Boolean){ newGame = b; }
-		public function set detection(_detection:Boolean) { __detection=_detection; }
+		public function set BallReadyForBouncing(b:Boolean) { ballReadyForBouncing=b; }
 
 		/* accessors */		
 		
@@ -199,7 +199,7 @@
 		public function getScoreBoard():ScoreBoard{ return Score; }
 		public function getPaddle():paddle{ return Paddle; }
 		public function getBall():ball{ return Ball; }
-		public function get detection():Boolean { return __detection; }
+		public function get BallReadyForBouncing():Boolean { return ballReadyForBouncing; }
 		public function get SoundsHolder():SoundManager { return soundsHolder; }
 		public function get GameIsPaused():Boolean { return gameIsPaused; }
 	}

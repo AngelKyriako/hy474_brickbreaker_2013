@@ -10,7 +10,6 @@
 		
 		private var brGame:BrickBreaker;
 		private var bricksNumber:Number;
-		private var bricksArray:Array=new Array();
             
 		public function AllBricks(g:BrickBreaker, num:Number) {
 			super();
@@ -27,12 +26,10 @@
 		public function attachBricks():void {
 			var _xdistance:Number=0;
 			var _ydistance:Number=0;
-			bricksArray=[];
 
 			//adding different bricks on to the stage
 			for (var i:int=0; i<bricksNumber; i++) {
 				var brick:MovieClip;
-				bricksArray.push(brick);
 				var id:Number= brGame.randRange(1,5);
 				switch (id) {
 					case 1 :
@@ -51,17 +48,15 @@
 						brick=new yellow(brGame);
 						break;
 				}
-				brick.name="brick"+(i+1);
 				_xdistance=i;
-				_xdistance=_xdistance%10;
+				_xdistance=_xdistance%10; // each row can have maximum 10 bricks
 				brick.x=_xdistance*brick.width;
 				brick.y=_ydistance;
 				this.addChild(brick);
-				(i+1)%10==0?_ydistance=_ydistance+brick.height:NoChange();
+				
+				if ( (i+1)%10==0 ) _ydistance=_ydistance+brick.height; // go to the next row
 			}
 		}
-		
-		private function NoChange():void { return; }		
 		
 		/* mutator */
 		public function BrickHasBroken():void{

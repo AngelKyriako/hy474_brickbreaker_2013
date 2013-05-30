@@ -27,32 +27,27 @@
 			}
 			//right side
 			if (x>(brGame.stage.stageWidth - width/2)) {
-				if (brGame.detection) {
-					brGame.detection = false;
-				}
+				brGame.BallReadyForBouncing = true;
 				speedX*=direction;
+			}
+			//left side
+			if (x<(width/2)) {
+				brGame.BallReadyForBouncing = true;
+				speedX*=direction;
+			}
+			//up side
+			if (y<(height/2)) {
+				brGame.BallReadyForBouncing = true;
+				speedY*=direction;
 			}
 			//down side
 			if (y>(brGame.stage.stageHeight + height)) {
 				balllost();
 			}
-			//right side
-			if (x<(width/2)) {
-				if (brGame.detection) {
-					brGame.detection = false;
-				}
-				speedX*=direction;
-			}
-			//up side
-			if (y<(height/2)) {
-				if (brGame.detection) {
-					brGame.detection = false;
-				}
-				speedY*=direction;
-			}
-			if (brGame.getPaddle().hitTestObject(this) && !brGame.detection) {
+			//collision with paddle
+			if (brGame.getPaddle().hitTestObject(this) && brGame.BallReadyForBouncing) {
 				changeballAngle();
-				brGame.detection = true;
+				brGame.BallReadyForBouncing = false;
 				//Sound effect
 				brGame.SoundsHolder.PlayBallBouncing();
 			}

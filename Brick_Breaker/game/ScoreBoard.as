@@ -41,7 +41,7 @@
         }
         
 		public function showLifes(event:Event):void {
-            currentLifesField.text = "Lifes:\t" + addCommas(lifes);
+            currentLifesField.text = "Lives:\t" + addCommas(lifes);
         }
  
         public function addCommas(_score:uint):String{
